@@ -4,10 +4,6 @@
 dataHandler = (() => {
 	let items, http, apiKey, url, data, weather;
 
-	items = {
-		weather: []
-	};
-
 	Weather = function (cityName, Description) {
 		this.cityName = cityName;
 		this.description = Description;
@@ -25,33 +21,30 @@ dataHandler = (() => {
 
 	return {
 		makeHTTPRequest: (cityName) => {
-			http = new XMLHttpRequest();
+			let apiKey, url, err;
 			apiKey = '88035216d0ff4f9d8fd0a548c4048a60';
 			url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&itemsunits=metric&appid=${apiKey}`;
-			method = 'GET';
 
-			http.open(method, url, false);
-			http.onreadystatechange = () => {
-				if (http.readyState == http.DONE && http.status === 200) {
-					data = JSON.parse(http.responseText);
-				}
-			};
-			http.send();
-			return data;
+			fetch(url)
+			.then((response) => {
+				// convert response to JSON
+				result = response.json;
+				console.log(result);
+				return result;
+			})
+			.catch((err) => {
+				error = new Error('Something went wrong. Please check the City name and try again');
+				console.log(`${err}: ${error}`);
+			});
+			// return data;
 		},
-
-		storeWeatherData: (name, data) => {
+		getWeatherData: (name, data) => {
 			if (data !== null && data !== undefined) {
 				weather = new Weather(data.name, data.weather[0].description);
 				weather.temperature = data.main.temp;
-				items.weather.push(weather);
+				return weather;
+				// items.weather.push(weather);
 			}
-		},
-		getItem: () => {
-			return items.weather[0];
-		},
-		testing: () => {
-			console.log(items);
 		}
 	};
 })();
@@ -100,6 +93,20 @@ uiHandler = (() => {
 appHandler = ((dtHdlr, uiHdlr) => {
 	let DOM, input, cityName, getWeather, weatherData;
 
+	setupServiceWorker = () => {
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('./sw.js')
+			.then((res) => {
+				console.log('[Service Worker] registered');
+			})
+			.catch(err => {
+				console.log(`${err}: [Service Worker] not registered`);
+			});
+		} else {
+			console.log('[Service Worker] not found on this browser');
+		}
+	}
+
 	// setupEventListener
 	setupEventListener = function() {
 		DOM = uiHdlr.getDOMStrings();
@@ -113,29 +120,35 @@ appHandler = ((dtHdlr, uiHdlr) => {
 	};
 
 	getWeather = () => {
-		input = uiHdlr.getInput();
-		cityName = input.cityField;
+		cityName = uiHdlr.getInput().cityField;
 
 		if (cityName !== '' && /^[a-z]+/i.test(cityName)) {
 			console.log(cityName);
 			// clear Field
 			uiHdlr.clearField();
 
-			weatherData = dtHdlr.makeHTTPRequest(cityName);
-			// setTimeout(() => {
+			new Promise((resolve, reject) => {
+				resolve(dtHdlr.makeHTTPRequest(cityName));
+				reject("Nothing Worked");
+			})// (dtHdlr.makeHTTPRequest(cityName))
+			.then(data => {
 				console.log(weatherData);
-
-				dtHdlr.storeWeatherData(cityName, weatherData);
-		
+				data = dtHdlr.getWeatherData(cityName, weatherData);
+				console.log(data);
 				// update UI
-				uiHdlr.displayResult(dtHdlr.getItem());
+				// uiHdlr.displayResult(data);
+			})
+			.catch(err => {
+				console.log(`${err}`);
+			});
+			// setTimeout(() => {
 			// }, 3000);
-
 		}
 	};
 
 	return {
 		init: () => {
+			setupServiceWorker();
 			setupEventListener();
 			console.log(`App Initialization Successful!!!`);
 		}
@@ -143,3 +156,18 @@ appHandler = ((dtHdlr, uiHdlr) => {
 })(dataHandler, uiHandler);
 
 appHandler.init();
+
+/*{
+	new Promise((resolve, reject) => {
+		resolve(function hi() {
+			console.log("this is the resolve");
+		});
+		// reject(new Error(`There was an error`));
+	})
+	.then((val) => {
+		console.log(`${val()}`);
+	})
+	.catch(err => {
+		console.log(`${err}`);
+	})
+}*/

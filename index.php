@@ -18,10 +18,8 @@
     <div class="load">Loading...</div>
     <div class="weather">
         <h1 class="weatherCity">City Name</h1>
-
         <div class="weatherDescription">Weather Description</div>
         <div class="weatherTemperature">Temperature</div>
-
     </div>
 </div>
 <script src="app.js"></script>
