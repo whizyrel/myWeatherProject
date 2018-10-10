@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
+    <link rel="manifest" href="weather.webmanifest">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

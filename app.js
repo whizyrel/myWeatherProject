@@ -28,7 +28,7 @@ dataHandler = (() => {
 			fetch(url)
 			.then((response) => {
 				// convert response to JSON
-				result = response.json;
+				result = response.json();
 				console.log(result);
 				return result;
 			})
@@ -91,7 +91,7 @@ uiHandler = (() => {
 
 // APP Handler
 appHandler = ((dtHdlr, uiHdlr) => {
-	let DOM, input, cityName, getWeather, weatherData;
+	let DOM, input, cityName, getWeather, weatherData, waitTime;
 
 	setupServiceWorker = () => {
 		if ('serviceWorker' in navigator) {
@@ -126,15 +126,32 @@ appHandler = ((dtHdlr, uiHdlr) => {
 			console.log(cityName);
 			// clear Field
 			uiHdlr.clearField();
-
-			new Promise((resolve, reject) => {
-				resolve(dtHdlr.makeHTTPRequest(cityName));
-				reject("Nothing Worked");
-			})// (dtHdlr.makeHTTPRequest(cityName))
+			new Promise((resolve) => {
+				async function getData() {
+				// try async await
+					return await dtHdlr.makeHTTPRequest(cityName);
+					// return result; 
+				}
+				return resolve(getData());
+			})
 			.then(data => {
-				console.log(weatherData);
-				data = dtHdlr.getWeatherData(cityName, weatherData);
 				console.log(data);
+				/*
+				setTimeout for 3000
+				if data is different from undefined, setTimeout to 0
+				then execute callback
+
+				setTimeout(function(){
+
+					if (data !== undefined) {
+						console.log(data);
+						waitTime = 0;
+					}
+				}, waitTime);
+
+				if all these doesnt work fallback to xhr
+				*/
+				return data = dtHdlr.getWeatherData(cityName, data);
 				// update UI
 				// uiHdlr.displayResult(data);
 			})
@@ -157,17 +174,24 @@ appHandler = ((dtHdlr, uiHdlr) => {
 
 appHandler.init();
 
-/*{
-	new Promise((resolve, reject) => {
-		resolve(function hi() {
-			console.log("this is the resolve");
-		});
-		// reject(new Error(`There was an error`));
-	})
-	.then((val) => {
-		console.log(`${val()}`);
-	})
-	.catch(err => {
-		console.log(`${err}`);
-	})
-}*/
+/*
+// solve asynchronous problems with fetch
+// convert promise to json
+*/
+
+/*
+1. get today's date
+2. get next day = today++;
+
+construct full day from parameters above
+
+
+// predefined time
+on install, notify user of weather
+then at predefined time;
+else cannot get weather update, enable network connectivity
+
+// user specified time
+2. get today's time minus time from 23:59
+
+*/
