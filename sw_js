@@ -1,4 +1,4 @@
-let cacheName = 'v2';
+/* let cacheName = 'v1';
 let cacheFiles = [
 	'./',
 	'./icons',
@@ -13,7 +13,7 @@ self.addEventListener('install', function(e) {
 	e.waitUntil(
 		caches.open(cacheName)
 		.then(function(cache) {
-			console.log(`[Service Worker] Caching all app files`);
+			console.log(`[Service Worker] Caching app Files`);
 			return cache.addAll(cacheFiles);
 		})
 	);
@@ -21,7 +21,7 @@ self.addEventListener('install', function(e) {
 
 self.addEventListener('activate', function(e) {
 	console.log(`[Service Worker] activated`);
-	e.waitUnti(
+	e.waitUntil(
 		caches.keys()
 		.then(function(cacheList) {
 			return Promise.all(cacheList.map(function(key) {
@@ -38,7 +38,8 @@ self.addEventListener('fetch', function(e) {
 		caches.match(e.request)
 		.then(function(response) {
 			console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
-			return response || fetch(e.request)
+			return response || 
+			fetch(e.request)
 			.then(function(response) {
 				return caches.open(cacheName)
 				.then(cache => {
@@ -50,5 +51,8 @@ self.addEventListener('fetch', function(e) {
 			});
 
 		})
+		.catch((error) => {
+			console.log(`${error}: [Service Worker] Resource not found in cache`);
+		})
 	);
-});
+}); */

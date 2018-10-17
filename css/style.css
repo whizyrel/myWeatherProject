@@ -1,11 +1,55 @@
-/* Styles go here */
+* {
+    margin: 0;
+    padding: 0;
+    color: black;
+    width: 100%;
+    height: fit-content;
+}
+body {
+    overflow-x: none;
+    overflow-y: scroll; 
+}
+.navbar {
+    display: flex;
+    height: 48px;
+    width: 100%;
+    background-color: #000000;
+}
+.boxAlign {
+    display: flex;
+    flex: auto;
+    align-items: center;
+    text-align: center;
+}
+.navbar p {
+    color: white;
+    font-size: 18px;
+    font-family: Raleway;
+}
+.appTitle {
+    font-weight: bold;
+    height: 100%;
+    width: 100px;
+    margin-left: 40px;
+}
+.searchBar{
+    float: right;
+    height: 100%;
+    /* background-color: none; */
+    margin-right: 40px;
+    width: 80px;
+    /* background: none; */
+    border: none;
+    color: black;
+}
 
+/* 
 body {
     box-sizing: border-box;
     overflow: none;
     padding: 0;
     margin: auto;
-    font-family: Helvetica Neue, Helvetica, Arial;
+    font-family: Raleway;
 }
 
 header {
@@ -41,7 +85,6 @@ label {
     margin-right: 5px; 
     font-weight: bold;
 }
-
 .search input {
     padding: 2px;
     text-align: center;
@@ -59,7 +102,6 @@ label {
     border: 1px solid rgb(16, 0, 71);
     border-radius: 0.6rem;
 }
-
 .search button {
     margin-left: 5px; 
     font-family: inherit;
@@ -91,7 +133,7 @@ label {
     box-shadow: 2px 2px 3px #ccc;
     color: white;
     box-sizing: border-box;
-    display: none;
+    display: block;
     font-weight: bold;
 }
 
@@ -115,4 +157,4 @@ label {
     width: 85%;
     margin: 20px auto;
     display: none;
-}
+} */
