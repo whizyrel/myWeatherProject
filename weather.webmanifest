@@ -1,6 +1,6 @@
 {
     "name": "Weather Buddy",
-    "short_name": "Weadher-ai",
+    "short_name": "WeathAI",
     "description": "Progressive Web App that notifies users of weather reports",
     "icons": [
         {
