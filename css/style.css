@@ -1,4 +1,4 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     color: black;
@@ -35,15 +35,13 @@ body {
 .searchBar{
     float: right;
     height: 100%;
-    /* background-color: none; */
     margin-right: 40px;
     width: 80px;
-    /* background: none; */
     border: none;
     color: black;
-}
+} */
 
-/* 
+
 body {
     box-sizing: border-box;
     overflow: none;
@@ -157,4 +155,4 @@ label {
     width: 85%;
     margin: 20px auto;
     display: none;
-} */
+}
