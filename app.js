@@ -1,10 +1,15 @@
-"use stict";
-
 {
+
+	"use stict";
 	let dataHandler, uiHandler, appHandler;
+
 	// DATA Handler
 	dataHandler = (() => {
-		let items, http, apiKey, url, data, Weather, weather;
+		let items, Weather;
+
+		items = {
+			weather: []
+		};
 
 		Weather = function (cityName, Description) {
 			this.cityName = cityName;
@@ -23,33 +28,37 @@
 
 		return {
 			makeHTTPRequest: (cityName) => {
-				let apiKey, url, err, result, error, json;
+				let http, apiKey, url, method, data;
+
+				http = new XMLHttpRequest();
 				apiKey = '88035216d0ff4f9d8fd0a548c4048a60';
 				url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&itemsunits=metric&appid=${apiKey}`;
+				method = 'GET';
 
-				fetch(url)
-				.then((response) => {
-					// convert response to JSON
-					result = response.json()
-					.then((json) => {
-						return json;
-					})
-					.catch((err) => {
-						console.log(`${err}`);
-					});
-				})
-				.catch((err) => {
-					error = Error('Please check the Request and try again');
-					console.log(`${err}: ${error}`);
-				});
-				return json;
+				http.open(method, url, false);
+				http.onreadystatechange = () => {
+					if (http.readyState == http.DONE && http.status === 200) {
+						data = JSON.parse(http.responseText);
+					}
+				};
+				http.send();
+				return data;
 			},
-			getWeatherData: data => {
+
+			storeWeatherData: (data) => {
+				let weather;
+
 				if (data !== null && data !== undefined) {
 					weather = new Weather(data.name, data.weather[0].description);
 					weather.temperature = data.main.temp;
-					return weather;
+					items.weather.push(weather);
 				}
+			},
+			getItem: () => {
+				return items.weather[0];
+			},
+			testing: () => {
+				console.log(items);
 			}
 		};
 	})();
@@ -96,21 +105,7 @@
 
 	// APP Handler
 	appHandler = ((dtHdlr, uiHdlr) => {
-		let DOM, input, cityName, getWeather, weatherData, setupServiceWorker, setupEventListener;
-
-/* 		setupServiceWorker = () => {
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('./sw.js')
-				.then((res) => {
-					console.log('[Service Worker] registered');
-				})
-				.catch(err => {
-					console.log(`${err}: [Service Worker] not registered`);
-				});
-			} else {
-				console.log('[Service Worker] not found on this browser');
-			}
-		}; */
+		let setupEventListener, DOM, input, cityName, getWeather, weatherData;
 
 		// setupEventListener
 		setupEventListener = function() {
@@ -118,7 +113,6 @@
 
 			document.querySelector(DOM.btn).addEventListener('click', getWeather);
 			document.addEventListener('keypress', (event) => {
-				// @ts-ignore
 				if (event.keycode === 13 || event.which === 13) {
 					getWeather();
 				}
@@ -126,48 +120,34 @@
 		};
 
 		getWeather = () => {
-			cityName = uiHdlr.getInput().cityField;
+			input = uiHdlr.getInput();
+			cityName = input.cityField;
 
 			if (cityName !== '' && /^[a-z]+/i.test(cityName)) {
 				console.log(cityName);
 				// clear Field
 				uiHdlr.clearField();
-				weatherData = dtHdlr.getWeatherData(dtHdlr.makeHTTPRequest(cityName));
-				console.log(weatherData);
-				// update UI
-				uiHdlr.displayResult(weatherData);
+
+				weatherData = dtHdlr.makeHTTPRequest(cityName);
+				// setTimeout(() => {
+					console.log(weatherData);
+
+					dtHdlr.storeWeatherData(weatherData);
+			
+					// update UI
+					uiHdlr.displayResult(dtHdlr.getItem());
+				// }, 3000);
+
 			}
 		};
 
 		return {
 			init: () => {
-				// setupServiceWorker();
 				setupEventListener();
 				console.log(`App Initialization Successful!!!`);
 			}
 		};
 	})(dataHandler, uiHandler);
+
 	appHandler.init();
-
-/*
-// periodic weather data grab maybe using setInterval
-// periodic notification - push Notification
-// integrate google map
-*/
-
-/*
-1. get today's date
-2. get next day = today++;
-
-construct full day from parameters above
-
-// predefined time
-on install, notify user of weather
-then at predefined time;
-else cannot get weather update, enable network connectivity
-
-// user specified time
-2. get today's time minus time from 23:59
-
-*/
 }
