@@ -1,0 +1,114 @@
+body {
+    box-sizing: border-box;
+    overflow: none;
+    padding: 0;
+    margin: auto;
+    font-family: Raleway;
+}
+
+header {
+    height: 100px;
+    background-color: lightblue;
+    text-align: center;
+    padding-top: 20px;
+    box-shadow: 3px 3px 3px #ccc;
+}
+
+header h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: dodgerblue;
+    margin: 0;
+}
+
+.main {
+    text-align: center;
+    margin: 30px auto;
+    width: 95%;
+    display: block;
+}
+
+.search {
+    width: 95%;
+    font-size: 18px;
+}
+label {
+    color: #1e90ff;
+}
+.search label {
+    margin-right: 5px; 
+    font-weight: bold;
+}
+.search input {
+    padding: 2px;
+    text-align: center;
+    font-size: 15px;
+    font-family: inherit;
+    width: 200px;
+    height: 30px;
+    border-radius: 0.5rem;
+    border: 1px solid dodgerblue;
+}
+.search input:hover, input:focus {
+    text-align: left;
+    width: 50%;
+    padding-left: 10px;
+    border: 1px solid rgb(16, 0, 71);
+    border-radius: 0.6rem;
+}
+.search button {
+    margin-left: 5px; 
+    font-family: inherit;
+    font-size: 15px;
+    width: 65px;
+    height: 40px;
+    background-color: dodgerblue;
+    border: 1px solid dodgerblue;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+}
+
+.search button:hover {
+    width: 65px;
+    height: 40px;
+    background-color: white;
+    color: dodgerblue;
+    border: 1.5px solid dodgerblue;
+
+}
+
+.weather {
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 95%;
+    margin: 10px auto;
+    background-color: deepskyblue;
+    box-shadow: 2px 2px 3px #ccc;
+    color: white;
+    box-sizing: border-box;
+    display: block;
+    font-weight: bold;
+}
+
+.weather h1 {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.weatherDescription {
+    float: left;
+}
+
+.weatherTemperature {
+    float: right;
+}
+
+.load {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 85%;
+    margin: 20px auto;
+    display: none;
+}
