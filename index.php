@@ -7,30 +7,13 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<header>
-    <div class="navbar">
-        <div class="appTitle boxAlign">
-            <p>WeatherBy</p>
+    <header>
+        <div class="navbar">
+            <div class="appTitle boxAlign">
+                <p>WeatherBy</p>
+            </div>
         </div>
-    </div>
-</header>
-
-
-<!-- <header>
-    <h1>The Super Awesome Weather App</h1>
-</header>
-<div class="main">
-    <div class="search">
-        <label>City Name</label>
-        <input class="city" type="text" placeholder="What's the name of the city?">
-        <button class='btn' type="button">Submit</button>
-    </div>
-    <div class="load">Loading...</div>
-    <div class="weather">
-        <h1 class="weatherCity">City Name</h1>
-        <div class="weatherDescription">Weather Description</div>
-        <div class="weatherTemperature">Temperature</div>
-    </div> -->
+    </header>
 </div>
 <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 <script>
