@@ -4,7 +4,7 @@
 	let dataHandler, uiHandler, appHandler;
 	// DATA Handler
 	dataHandler = (() => {
-		let items, http, apiKey, url, data, Weather, weather;
+		let Weather;
 
 		Weather = function (cityName, Description) {
 			this.cityName = cityName;
@@ -22,29 +22,29 @@
 		});
 
 		return {
-			makeHTTPRequest: (cityName) => {
-				let apiKey, url, err, result, error, json;
+			getData: cityName => {
+				let apiKey, url;
+				
 				apiKey = '88035216d0ff4f9d8fd0a548c4048a60';
 				url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&itemsunits=metric&appid=${apiKey}`;
 
 				fetch(url)
 				.then(response => {
 					// convert response to JSON
-					result = response.json()
-					.then((json) => {
-						return json;
-					})
-					.catch((err) => {
-						console.log(`${err}`);
+					return response.json()
+					.then(_json => {
+						return (_json);
 					});
 				})
 				.catch((err) => {
+					let error;
 					error = Error('Please check the Request and try again');
-					console.log(`${err}: ${error}`);
+					console.log(`${error.name}: ${err}`);
 				});
-				return json;
 			},
 			getWeatherData: data => {
+				let weather;
+
 				if (data !== null && data !== undefined) {
 					weather = new Weather(data.name, data.weather[0].description);
 					weather.temperature = data.main.temp;
@@ -132,10 +132,11 @@
 				console.log(cityName);
 				// clear Field
 				uiHdlr.clearField();
-				weatherData = dtHdlr.getWeatherData(dtHdlr.makeHTTPRequest(cityName));
+				console.log(dtHdlr.getData(cityName));
+				/* weatherData = dtHdlr.getWeatherData(dtHdlr.getData(cityName));
 				console.log(weatherData);
 				// update UI
-				uiHdlr.displayResult(weatherData);
+				uiHdlr.displayResult(weatherData); */
 			}
 		};
 

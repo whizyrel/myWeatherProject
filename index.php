@@ -8,18 +8,6 @@
 </head>
 <body>
 <header>
-    <div class="navbar">
-        <div class="appTitle boxAlign">
-            <p>WeatherBy</p>
-        </div>
-        <div class="searchBar boxAlign">
-            <button></button>   
-        </div>
-    </div>
-</header>
-
-<!-- 
-<header>
     <h1>The Super Awesome Weather App</h1>
 </header>
 <div class="main">
@@ -34,7 +22,7 @@
         <div class="weatherDescription">Weather Description</div>
         <div class="weatherTemperature">Temperature</div>
     </div>
-</div> -->
+</div>
 <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
 <script>
   // Initialize Firebase
