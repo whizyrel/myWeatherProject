@@ -8,18 +8,6 @@
 </head>
 <body>
 <header>
-<!--     <div class="navbar">
-        <div class="appTitle boxAlign">
-            <p>WeatherBy</p>
-        </div>
-        <div class="searchBar boxAlign">
-            <button></button>   
-        </div>
-    </div>
-</header>
- -->
-
-<header>
     <h1>The Super Awesome Weather App</h1>
 </header>
 <div class="main">
