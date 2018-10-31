@@ -12,9 +12,6 @@
         <div class="appTitle boxAlign">
             <p>WeatherBy</p>
         </div>
-        <div class="searchBar boxAlign">
-            <button></button>   
-        </div>
     </div>
 </header>
 
