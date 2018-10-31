@@ -28,7 +28,7 @@
 				url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&itemsunits=metric&appid=${apiKey}`;
 
 				fetch(url)
-				.then((response) => {
+				.then(response => {
 					// convert response to JSON
 					result = response.json()
 					.then((json) => {
